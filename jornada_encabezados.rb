@@ -4,9 +4,9 @@ require 'mechanize'
 
 agent = Mechanize.new
 
-page = agent.get 'http://www.jornada.unam.mx/2015/06/26'
-
-@headers = page.root.css('.cabeza > a')
-
-puts @headers.map{ |header| { text: header.text, link: header['href'] } }
+((Date.today - 30)..(Date.today)).each do |date|
+  page = agent.get "http://www.jornada.unam.mx/#{date.year}/#{"%02d" % date.month}/#{"%02d" % date.day}"
+  @headers = page.root.css('.cabeza > a')
+  puts @headers.map{ |header| { text: header.text, link: header['href'] } }
+end
 
